@@ -10,14 +10,14 @@ const imagesContainer = document.querySelector(".images__container");
 let keyWord = "";
 let page = 0;
 
+searchBox.focus();
+
 async function searchImages() {
   keyWord = searchBox.value;
   const url = `https://api.unsplash.com/search/photos?per_page=16&page=${page}&query=${keyWord}&client_id=${accessKey}`;
 
   const response = await fetch(url);
   const data = await response.json();
-
-  console.log(data);
 
   const results = data.results;
 
@@ -37,22 +37,26 @@ async function searchImages() {
     box.appendChild(aTag);
     imagesContainer.appendChild(box);
   });
+
+  if (imagesContainer.innerHTML != "") {
+    showMore.style.display = "block";
+  } else {
+    showMore.style.display = "none";
+  }
 }
 
 searchBtn.addEventListener("click", function (e) {
-  imagesContainer.innerHTML = "";
-  e.preventDefault();
-  page = 1;
-  searchImages();
+  if (searchBox.value != "") {
+    imagesContainer.innerHTML = "";
+    e.preventDefault();
+    page = 1;
+    searchImages();
+  } else {
+    alert("Please search a valid name");
+  }
 
   showMore.addEventListener("click", function (e) {
     page++;
     searchImages();
   });
-
-  if(page === 1) {
-    showMore.style.display = "block";
-  }else {
-    showMore.style.display = "none";
-  }
 });
