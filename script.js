@@ -46,14 +46,19 @@ async function searchImages() {
 }
 
 searchBtn.addEventListener("click", function (e) {
-  if (searchBox.value != "") {
-    imagesContainer.innerHTML = "";
-    e.preventDefault();
-    page = 1;
-    searchImages();
-  } else {
-    alert("Please search a valid name");
+  if(imagesContainer.innerHTML === ""){
+    alert('Plz search a valid name')
+  }else{
+    if (searchBox.value != "") {
+      imagesContainer.innerHTML = "";
+      e.preventDefault();
+      page = 1;
+      searchImages();
+    } else {
+      alert("Please search a valid name");
+    }
   }
+
 
   showMore.addEventListener("click", function (e) {
     page++;
